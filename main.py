@@ -1,26 +1,134 @@
 from financeiro import *
+import os
+pendentes = []
+areceber = []
+contas = Financeiro()
 
 
-pendentes=[]
-areceber=[]
+def limpa_tela():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
-contas=Financeiro()
+def menu():
+    print("Bem vindo ao sistema financeiro")
+    print("""
+1 - Contas a pagar
+2 - Contas a receber
+3 - Grava (Exportar)
+4 - Lê (Importar)
+0 - Sair""")
+    return valida_faixa_inteiro("Escolha uma opção: ", 0, 6)
+
+
+def submenu():
+    print("""
+1 - Novo
+2 - Altera
+3 - Apaga
+4 - Lista
+0 - Voltar ao menu anterior
+""")
+    return valida_faixa_inteiro("Escolha uma opção: ", 0, 4)
+
+
+def pede_descrição():
+    return input("Descrição: ")
+
+
+def pede_valor():
+    return float(input("Valor: "))
+
+
+def pede_quantidade():
+    return int(input("Quantidade: "))
+
+
+def pede_vencimento():
+    return int(input("Vencimento: "))
+
+
+def valida_faixa_inteiro(pergunta, inicio, fim):
+    while True:
+        try:
+            valor = int(input(pergunta))
+            if inicio <= valor <= fim:
+                return valor
+        except ValueError:
+            print(f"Valor inválido, favor digitar entre {inicio} e {fim}")
+
+
+def novo():
+    #global pendentes
+    nome = pede_descrição()
+    valor = pede_valor()
+    quantidade = pede_quantidade()
+    vencimento = pede_vencimento()
+    contas.cadastrarApagar(nome, valor, quantidade, vencimento)
+    print("Cadastro Efetuado com Sucesso!")
+    #pendentes.append([nome, telefone])
+
+
+""" while True:
+    try:
+        #contas.listarApagar()
+        #print("Cadastro Efetuado com Sucesso!")
+    else:
+        print("Digite novamente")
+        break
+    except:
+        print('Nossos engenheiros irão analisar o problema!')
+
+1 - Contas a pagar
+    1 - Novo
+    2 - Altera
+    3 - Apaga
+    4 - Lista
+2 - Contas a receber
+    1 - Novo
+    2 - Altera
+    3 - Apaga
+    4 - Lista
+3 - Grava (Exportar)
+4 - Lê (Importar)
+ """
 
 while True:
-	try:
-	    print("Bem vindo ao sistema financeiro")
-	    opcao=int(input("Digite uma opcao: "))
-	    if opcao == 1:
-		print("Cadastrar a pagar")
-		desc= input("Descrição: ")
-		valor= int(input("Valor a pagar: "))
-		qtd= int(input("Quantas parcelas: "))
-		venc= int(input("Dia vencimento: "))
-		contas.cadastrarApagar(desc,valor,qtd,venc)
-		contas.listarApagar()
-		print("Cadastro Efetuado com Sucesso!")
-	    else:
-		print("Digite novamente")
-		break
-	   except:
-	      print('Nossos engenheiros irão analisar o problema!')
+    opção = menu()
+    # Opção 0 - Sai,  Encerra o sistema
+    if opção == 0:
+        break
+
+    elif opção == 1:
+        submenu()
+        if opção == 1:
+            novo()
+        elif opção == 2:
+            print('altera()')
+        elif opção == 3:
+            print('apaga()')
+        elif opção == 4:
+            print('lista()')
+        elif opção == 0:
+            print("Voltando ao menu anterior")
+            menu()
+    # Opção 1 - Contas a pagar,
+    #    1 - Novo
+    #    2 - Altera
+    #    3 - Apaga
+    #    4 - Lista
+    #    limpa_tela()
+    elif opção == 2:
+        print("Contas a receber")
+        # Opção 1 - Contas a receber,
+        #    1 - Novo
+        #    2 - Altera
+        #    3 - Apaga
+        #    4 - Lista
+        #  limpa_tela()
+    elif opção == 3:
+        print('grava()')
+        # 3 - Grava (Exportar para arquivo de dados)
+                # limpa_tela()
+    elif opção == 4:
+        # 4 - Lê (Importar de um arquivo de dados)
+        print('le()')
+        #  limpa_tela()
